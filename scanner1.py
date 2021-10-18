@@ -2,69 +2,33 @@
 
 import re
 
+# Allows the user to select the filename they would like to scan
 print("Enter Filename: ")
 file = input()
 
-f = open(file, "r")
-print(f.read())
+# Opens the file selected by the user
+f = open(file, "r", encoding='utf-8')
+code = f.read()
 
-keywords = {
-    "reserved": "def",
-    "identifier": "magic_func",
-    "symbol": "(",
-    "symbol": ")",
-    "operator": ":",
-    "identifier": "rem",
-    "operator": "=",
-    "identifier": "num",
-    "operator": "%",
-    "number": "2",
-    "reserved": "if",
-    "identifier": "rem",
-    "operator": "==",
-    "number": "0",
-    "symbol": ":",
-    "reserved": "return",
-    "number": "1",
-    "operator": "+",
-    "number": "4",
-    "reserved": "else",
-    "symbol": ":",
-    "reserved": "return",
-    "number": "0.1",
-    "reserved": "for",
-    "identifier": "sel_a",
-    "reserved": "in",
-    "identifier": "range",
-    "symbol": "(",
-    "number": "10",
-    "symbol": ")",
-    "symbol": ":",
-    "identifier": "a",
-    "operator": "=",
-    "identifier": "magic_func",
-    "symbol": "(",
-    "identifier": "sel_a",
-    "symbol": ")",
-    "reserved": "if",
-    "identifier": "a",
-    "operator": ">=",
-    "number": "1",
-    "symbol": ":",
-    "identifier": "print",
-    "symbol": "(",
-    "string": "res:",
-    "symbol": ",",
-    "identifier": "sel_a",
-    "symbol": ")",
-    "reserved": "else",
-    "symbol": ":",
-    "identifier": "print",
-    "symbol": "(",
-    "string": "res:",
-    "symbol": ",",
-    "identifier": "sel_a",
-    "operator": "*",
-    "number": "10.5",
-    "symbol": ")"
-}
+# Get rid of comments
+# tokenList = re.split("#.+", code)
+
+# Splits up tokens and puts into list
+tokenList = list(filter(None, re.split(r"(?=')('[^'\\]*')|\s+|([(),:])", code)))
+
+# If between string " or ' ,
+for x in tokenList:
+    if re.search(r"^(\d+(?:\.\d+)?)$", x):
+        print(f"(number, \'{x}\')")
+    elif re.search(r"^(<=|<|>|=|>=|!=|==|!|\*|\\|%|\+|-)$", x):
+        print(f"(operator, \'{x}\')")
+    elif re.search(r'^(def|if|return|elif|else|for|in)$', x):
+        print(f"(reserved, \'{x}\')")
+    elif re.search(r"^([)(:,])$", x):
+        print(f"(symbols, \'{x}\')")
+    elif re.search(r"^(?=')('[^'\\]*')$", x):
+        print(f"(string, {x})")
+    else:
+        print(f"(UNKNOWN, \'{x}\')")
+
+print(len(tokenList))

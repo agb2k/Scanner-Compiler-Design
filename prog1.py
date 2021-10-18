@@ -12,3 +12,4 @@ for sel_a in range(10):
         print('res: ', sel_a)
     else:
         print('res: ', sel_a * 10.5)
+
