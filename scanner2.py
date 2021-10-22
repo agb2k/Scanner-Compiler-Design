@@ -56,5 +56,3 @@ for x in tokens:
     # Conditional statement to test whether lexeme is reserved word
     else:
         print(f"(identifier, \'{x}\')")
-
-print(len(tokens))

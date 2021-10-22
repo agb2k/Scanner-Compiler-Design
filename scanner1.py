@@ -34,5 +34,3 @@ for x in tokenList:
     # If other options are not possible token is identifier
     else:
         print(f"(identifier, \'{x}\')")
-
-print(print(f"No. of Tokens: {len(tokenList)}"))
