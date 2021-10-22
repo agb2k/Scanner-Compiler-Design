@@ -1,6 +1,5 @@
-# Download nltk corpus
+# Used to download nltk corpus
 import nltk
 
 nltk.download()
 
-# (?=')'((?:[^'\\]|\\')*)'|\s+|^#.+|([(),:])
