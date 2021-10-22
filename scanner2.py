@@ -14,13 +14,16 @@ tokens = word_tokenize(code)
 # Deals with ' being separated due to NLTK
 flg = False
 for c, x in enumerate(tokens):
+    # Conditional which checks if lexeme is a part of the string type
     if (not flg) and (x[0] == "\'") and (x[-1] != "\'"):
         text = x
         flg = True
         tokens[c] = ''
+    # Conditional which checks whether lexeme is part of the content between apostrophes of string
     elif flg and x != "\'":
         text = text + x
         tokens[c] = ''
+    # Conditional checks if lexeme is the end of a string
     elif flg and x == "\'":
         flg = False
         text = text + x
@@ -30,6 +33,7 @@ for c, x in enumerate(tokens):
 
 # Deals with certain operators like <= and >= being separated due to NLTK
 for c, x in enumerate(tokens):
+    # Conditional to check if lexemes are separated <= or >=
     if x == '=' and (tokens[c-1] == '<' or tokens[c-1] == '>'):
         tokens[c] = tokens[c-1] + x
         tokens[c-1] = ''
